@@ -6,7 +6,7 @@ android {
 
     defaultConfig {
         applicationId "com.example.jambo.rxjavajamboweather"
-        minSdkVersion 14
+        minSdkVersion 16
         targetSdkVersion 23
         versionCode 1
         versionName "1.0"
@@ -29,4 +29,5 @@ dependencies {
     compile 'com.squareup.retrofit2:adapter-rxjava:2.0.0-beta4'
     compile 'io.reactivex:rxjava:1.1.0'
     compile 'io.reactivex:rxandroid:1.1.0'
+    compile 'com.demievil.library:refreshlayout:1.0.0@aar'
 }

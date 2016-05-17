@@ -39,7 +39,7 @@ public class WeatherDB {
 
     public List<City> loadCities(SQLiteDatabase db, int ProSort){
         List<City> cityList = new ArrayList<>();
-        Cursor cursor = db.query("T_City",null,null,null,null,null,null);
+        Cursor cursor = db.query("T_City",null,"ProId = ?",new String[]{String.valueOf(ProSort)},null,null,null);
         if (cursor.moveToFirst()){
             do {
                 City city = new City();

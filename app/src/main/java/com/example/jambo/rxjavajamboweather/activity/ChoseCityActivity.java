@@ -83,7 +83,7 @@ public class ChoseCityActivity extends Activity{
     }
 
     public void init(){
-        listView = (ListView) findViewById(R.id.list_view);
+        listView = (ListView) findViewById(R.id.chose_list_view);
         title_text = (TextView) findViewById(R.id.title_text);
         mDBManager = new DBManager(this);
         mDBManager.openDatabase();
