@@ -1,9 +1,11 @@
 package com.example.jambo.rxjavajamboweather;
 
 import android.app.Activity;
+import android.app.NotificationManager;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.app.NotificationCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -23,6 +25,8 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import rx.Observer;
 import rx.android.schedulers.AndroidSchedulers;
@@ -33,6 +37,7 @@ import rx.schedulers.Schedulers;
 public class WeatherActivity extends Activity {
     public static final String key = "1f93bec9ad304eb2ae641280bd65b9df";
     public static String CITY_NAME = "长沙";
+    public static final int ID = 1;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -58,7 +63,7 @@ public class WeatherActivity extends Activity {
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
-            View view = inflater.inflate(R.layout.show_weather,container,false);
+            View view = inflater.inflate(R.layout.show_weather, container, false);
 
             suggistion_text = (TextView) view.findViewById(R.id.suggestion_text);
             city_text = (TextView) view.findViewById(R.id.city_name);
@@ -75,7 +80,7 @@ public class WeatherActivity extends Activity {
                     queryWeatherFromService();
                 }
             });
-            WeatherAdapter mAdapter = new WeatherAdapter(getActivity(),R.layout.weather_forecast_list_item_text,new ArrayList<Weather.DailyForecastEntity>());
+            WeatherAdapter mAdapter = new WeatherAdapter(getActivity(), R.layout.weather_forecast_list_item_text, new ArrayList<Weather.DailyForecastEntity>());
             weather_forecast_list.setAdapter(mAdapter);
             queryWeatherFromService();
             return view;
@@ -86,7 +91,7 @@ public class WeatherActivity extends Activity {
             super.onDestroyView();
         }
 
-        public  void queryWeatherFromService() {
+        public void queryWeatherFromService() {
             mSwipeRefreshLayout.setRefreshing(true);
             HttpUtil.getApiService().getWeather(CITY_NAME, key)
                     .subscribeOn(Schedulers.io())
@@ -112,7 +117,7 @@ public class WeatherActivity extends Activity {
                     .subscribe(new Observer<Weather>() {
                         @Override
                         public void onCompleted() {
-                            Toast.makeText(getActivity(), "è????????è????????è????????", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getActivity(), "这点功能你满足吗？", Toast.LENGTH_SHORT).show();
                             mSwipeRefreshLayout.setRefreshing(false);
                         }
 
@@ -125,17 +130,38 @@ public class WeatherActivity extends Activity {
                         public void onNext(Weather weather) {
                             suggistion_text.setText(weather.suggestion.drsg.txt);
                             city_text.setText(weather.basic.city);
-                            current_temp.setText(weather.now.tmp + "???");
+                            current_temp.setText(weather.now.tmp + "℃");
                             List<Weather.DailyForecastEntity> list = weather.dailyForecast;
 //                            list = weather.dailyForecast;++++
                             WeatherAdapter adapter = (WeatherAdapter) weather_forecast_list.getAdapter();
                             adapter.clear();
                             adapter.addAll(list);
+
+                            showNotification(getActivity(), weather);
                         }
                     });
 
         }
+
+
+        public void showNotification(Context context, Weather weather) {
+            NotificationCompat.Builder builder = new NotificationCompat.Builder(context);
+            builder.setSmallIcon(R.mipmap.weather);
+            String txt = weather.dailyForecast.get(0).cond.txtD;
+            builder.setContentTitle(txt);
+            Pattern pattern = Pattern.compile(".*雨");
+            Matcher matcher = pattern.matcher(txt);
+            if (matcher.matches()){
+                builder.setContentText("带伞啊傻逼等下又淋雨");
+            }else {
+                builder.setContentText("只要不下雨就是好天气");
+            }
+            NotificationManager manager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
+            manager.notify(ID,builder.build());
+        }
+
     }
+
 
     public static class WeatherAdapter extends ArrayAdapter<Weather.DailyForecastEntity> {
         private int resoureId;
@@ -184,8 +210,8 @@ public class WeatherActivity extends Activity {
                 }else {
                     viewHolder.day.setText(dayForWeek(date.date));
                 }
-                viewHolder.temp1.setText(date.tmp.min + "???");
-                viewHolder.temp2.setText(date.tmp.max + "???");
+                viewHolder.temp1.setText(date.tmp.min + "℃");
+                viewHolder.temp2.setText(date.tmp.max + "℃");
                 viewHolder.description.setText(date.cond.txtD);
             }catch (Exception e) {
                 e.printStackTrace();
