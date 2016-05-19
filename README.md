@@ -1,1 +1,2 @@
 # RxjavaJamboWeather
+一个学习Rxjava及Retrofit的测试项目
