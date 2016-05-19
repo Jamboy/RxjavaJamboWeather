@@ -32,12 +32,12 @@ import rx.schedulers.Schedulers;
 
 public class WeatherActivity extends Activity {
     public static final String key = "1f93bec9ad304eb2ae641280bd65b9df";
-    public static String CITY_NAME =null;
+    public static String CITY_NAME = "长沙";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.weather_activity);
-        CITY_NAME = getIntent().getStringExtra("city_name");
+//        CITY_NAME = getIntent().getStringExtra("city_name");
         if (savedInstanceState == null){
             getFragmentManager().beginTransaction()
                     .add(R.id.container, new ListFragment())
@@ -51,6 +51,7 @@ public class WeatherActivity extends Activity {
         private TextView current_temp;
         private ListView weather_forecast_list;
         private SwipeRefreshLayout mSwipeRefreshLayout;
+        private TextView suggistion_text;
 
 
         @Nullable
@@ -59,6 +60,7 @@ public class WeatherActivity extends Activity {
 
             View view = inflater.inflate(R.layout.show_weather,container,false);
 
+            suggistion_text = (TextView) view.findViewById(R.id.suggestion_text);
             city_text = (TextView) view.findViewById(R.id.city_name);
             current_temp = (TextView) view.findViewById(R.id.current_temp);
             weather_forecast_list = (ListView) view.findViewById(R.id.weather_forecast_list);
@@ -86,7 +88,6 @@ public class WeatherActivity extends Activity {
 
         public  void queryWeatherFromService() {
             mSwipeRefreshLayout.setRefreshing(true);
-//            String city_name = "北京";
             HttpUtil.getApiService().getWeather(CITY_NAME, key)
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
@@ -111,7 +112,7 @@ public class WeatherActivity extends Activity {
                     .subscribe(new Observer<Weather>() {
                         @Override
                         public void onCompleted() {
-                            Toast.makeText(getActivity(), "loading onCompleted", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getActivity(), "è????????è????????è????????", Toast.LENGTH_SHORT).show();
                             mSwipeRefreshLayout.setRefreshing(false);
                         }
 
@@ -122,8 +123,9 @@ public class WeatherActivity extends Activity {
 
                         @Override
                         public void onNext(Weather weather) {
+                            suggistion_text.setText(weather.suggestion.drsg.txt);
                             city_text.setText(weather.basic.city);
-                            current_temp.setText(weather.now.tmp + "℃");
+                            current_temp.setText(weather.now.tmp + "???");
                             List<Weather.DailyForecastEntity> list = weather.dailyForecast;
 //                            list = weather.dailyForecast;++++
                             WeatherAdapter adapter = (WeatherAdapter) weather_forecast_list.getAdapter();
@@ -175,9 +177,15 @@ public class WeatherActivity extends Activity {
 //            Weather weather = getItem(position);
             Weather.DailyForecastEntity date = getItem(position);
             try {
-                viewHolder.day.setText(dayForWeek(date.date));
-                viewHolder.temp1.setText(date.tmp.min + "℃");
-                viewHolder.temp2.setText(date.tmp.max + "℃");
+                if (position == 0){
+                    viewHolder.day.setText("Today");
+                }else if (position == 1){
+                    viewHolder.day.setText("Tomorrow");
+                }else {
+                    viewHolder.day.setText(dayForWeek(date.date));
+                }
+                viewHolder.temp1.setText(date.tmp.min + "???");
+                viewHolder.temp2.setText(date.tmp.max + "???");
                 viewHolder.description.setText(date.cond.txtD);
             }catch (Exception e) {
                 e.printStackTrace();
@@ -233,8 +241,8 @@ public class WeatherActivity extends Activity {
 //
 //    public static List<WeatherTest> init(){
 //        List<WeatherTest> list = new ArrayList<>();
-//        WeatherTest test = new WeatherTest("2016-4-4","15","10","晴天");
-//        WeatherTest test1 = new WeatherTest("2016-4-5","16","10","阴天");
+//        WeatherTest test = new WeatherTest("2016-4-4","15","10","????¤?");
+//        WeatherTest test1 = new WeatherTest("2016-4-5","16","10","é???¤?");
 //        list.add(test);
 //        list.add(test1);
 //        return list;

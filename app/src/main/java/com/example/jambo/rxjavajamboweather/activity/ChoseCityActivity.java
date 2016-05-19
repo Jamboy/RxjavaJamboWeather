@@ -49,6 +49,11 @@ public class ChoseCityActivity extends Activity{
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         this.setContentView(R.layout.chose_city);
+
+        /**
+         * 这里加判断，如果
+         */
+
         init();
         setListView();
 

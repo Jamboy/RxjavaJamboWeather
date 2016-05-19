@@ -24,8 +24,7 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                android:layout_marginBottom="20dp"
+                android:layout_marginTop="30dp"
                 android:layout_weight="1"
                 android:orientation="horizontal">
 
@@ -45,6 +44,13 @@
 
 
             </LinearLayout>
+
+            <TextView
+                android:id="@+id/suggestion_text"
+                android:paddingBottom="40dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
             <ListView
                 android:id="@+id/weather_forecast_list"
                 android:layout_width="match_parent"
