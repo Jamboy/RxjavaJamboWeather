@@ -37,19 +37,8 @@ public class ShowWeatherActivity extends Activity {
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.drawer_weather);
-        weather_list_view = (ListView) findViewById(R.id.weather_forecast_list);
-        city_text = (TextView) findViewById(R.id.city_name);
-        temp_text = (TextView) findViewById(R.id.current_temp);
-        suggistion_text = (TextView) findViewById(R.id.suggestion_text);
-        mSwipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.swipeRefresh_layout);
-        mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-            @Override
-            public void onRefresh() {
-                queryWeatherFromservice();
-            }
-        });
-        queryWeatherFromservice();
         init();
+        queryWeatherFromservice();
     }
 
     public void queryWeatherFromservice(){
@@ -88,6 +77,17 @@ public class ShowWeatherActivity extends Activity {
 
 
     public void init(){
+        weather_list_view = (ListView) findViewById(R.id.weather_forecast_list);
+        city_text = (TextView) findViewById(R.id.city_name);
+        temp_text = (TextView) findViewById(R.id.current_temp);
+        suggistion_text = (TextView) findViewById(R.id.suggestion_text);
+        mSwipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.swipeRefresh_layout);
+        mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                queryWeatherFromservice();
+            }
+        });
         NavigationView mNavigationView = (NavigationView) findViewById(R.id.navigation_view);
         mNavigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
