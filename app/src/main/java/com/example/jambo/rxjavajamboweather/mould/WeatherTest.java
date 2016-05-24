@@ -1,7 +1,7 @@
 package com.example.jambo.rxjavajamboweather.mould;
 
 /**
- * Created by Jambo on 2016/5/17.
+ * Created by Jambo on 2016/5/21.
  */
 public class WeatherTest {
     private String date;
@@ -9,11 +9,11 @@ public class WeatherTest {
     private String min;
     private String descri;
 
-    public WeatherTest(String date, String max, String min, String descri) {
+    public WeatherTest(String date, String descri, String max, String min) {
         this.date = date;
+        this.descri = descri;
         this.max = max;
         this.min = min;
-        this.descri = descri;
     }
 
     public String getDate() {
@@ -22,6 +22,14 @@ public class WeatherTest {
 
     public void setDate(String date) {
         this.date = date;
+    }
+
+    public String getDescri() {
+        return descri;
+    }
+
+    public void setDescri(String descri) {
+        this.descri = descri;
     }
 
     public String getMax() {
@@ -38,13 +46,5 @@ public class WeatherTest {
 
     public void setMin(String min) {
         this.min = min;
-    }
-
-    public String getDescri() {
-        return descri;
-    }
-
-    public void setDescri(String descri) {
-        this.descri = descri;
     }
 }

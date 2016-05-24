@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <group
+        android:id="@+id/group_first">
+
+
+        <item
+            android:id="@+id/chose_city"
+            android:icon="@mipmap/ic_launcher"
+            android:title="Chose City">
+        </item>
+
+        <item
+            android:id="@+id/setting"
+            android:icon="@mipmap/ic_launcher"
+            android:title="Setting">
+        </item>
+    </group>
+
+    <group
+        android:id="@+id/group_second">
+
+        <item
+            android:id="@+id/about"
+            android:title="About"
+            android:icon="@mipmap/ic_launcher">
+        </item>
+
+        <item
+            android:id="@+id/exit"
+            android:icon="@mipmap/ic_launcher"
+            android:title="Exit">
+        </item>
+
+
+    </group>
+
+
+</menu>

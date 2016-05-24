@@ -4,8 +4,13 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:id="@+id/container"
-    tools:context=".WeatherActivity"
+    tools:context=".activity.ShowWeatherActivity"
     tools:ignore="MergeRootFrame"
     >
 
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:text="setting"
+        android:textSize="15sp"/>
 </FrameLayout>

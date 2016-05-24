@@ -27,7 +27,7 @@ public class Utility {
         String current_time = weather.basic.update.loc;
         String [] loc = current_time.split(" ");
         String publish_time = loc[1];
-
+        Log.d("Activity", city_name);
         editor.putString("current_tmp",current_temp);
         editor.putBoolean("city_selected", true);
         editor.putString("city_name",city_name);

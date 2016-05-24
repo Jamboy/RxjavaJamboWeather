@@ -14,7 +14,6 @@
     <TextView
         android:id="@+id/description"
         android:layout_weight="3"
-        android:text="Sky is clear"
         style="@style/WeatherForecastListItemText"/>
 
 
@@ -22,12 +21,10 @@
 
         android:id="@+id/max_temp"
         android:layout_weight="2"
-        android:text="19"
         style="@style/WeatherForecastListItemTextEmphasis"/>
 
     <TextView
         android:id="@+id/min_temp"
         android:layout_weight="2"
-        android:text="15"
         style="@style/WeatherForecastListItemTextDeEmphasis"/>
 </LinearLayout>

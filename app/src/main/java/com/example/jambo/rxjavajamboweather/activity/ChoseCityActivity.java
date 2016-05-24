@@ -11,7 +11,6 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.example.jambo.rxjavajamboweather.R;
-import com.example.jambo.rxjavajamboweather.WeatherActivity;
 import com.example.jambo.rxjavajamboweather.db.DBManager;
 import com.example.jambo.rxjavajamboweather.db.WeatherDB;
 import com.example.jambo.rxjavajamboweather.mould.City;
@@ -78,7 +77,7 @@ public class ChoseCityActivity extends Activity{
                                     .replace("地区","")
                                     .replace("盟","");
                     }
-                    Intent intent = new Intent(ChoseCityActivity.this, WeatherActivity.class);
+                    Intent intent = new Intent(ChoseCityActivity.this, ShowWeatherActivity.class);
                     intent.putExtra("city_name",city_name);
                     startActivity(intent);
                 }

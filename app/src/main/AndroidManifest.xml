@@ -14,7 +14,10 @@
         android:theme="@style/AppTheme" >
         <activity android:name=".activity.ChoseCityActivity"/>
 
-        <activity android:name=".WeatherActivity">
+
+        <activity android:name=".activity.SettingActivity"/>
+
+        <activity android:name=".activity.ShowWeatherActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -22,7 +25,6 @@
             </intent-filter>
         </activity>
 
-        <service android:name=".service.AutoUpdateWeather"/>
 
     </application>
 
