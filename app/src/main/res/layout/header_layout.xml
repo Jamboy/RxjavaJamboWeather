@@ -8,7 +8,7 @@
         android:layout_height="150dp"
         android:gravity="center"
         android:textSize="20sp"
-        android:text="What is your focus main for today ?"
+        android:text="咦啊咦子哟\nwhat is your main focus main for today?"
         android:background="@color/header_background"/>
     
     

@@ -14,11 +14,14 @@ import java.util.Locale;
 /**
  * Created by Jambo on 2016/5/12/012.
  */
+
 public class Utility {
-    public static void saveWeatherInfo(Weather weather, Context context){
+    private SharedPreferences.Editor editor;
+
+    public void saveWeatherInfo(Weather weather, Context context){
         Log.d("Activity","saveInfo");
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy年M月d日", Locale.CHINA);
-        SharedPreferences.Editor editor = PreferenceManager.getDefaultSharedPreferences(context).edit();
+        editor = PreferenceManager.getDefaultSharedPreferences(context).edit();
         String city_name = weather.basic.city;
         String current_temp = weather.now.tmp;
         String temp1 = weather.dailyForecast.get(0).tmp.min;
@@ -37,6 +40,12 @@ public class Utility {
         editor.putString("publish_time",publish_time);
         editor.putString("current_time",current_time);
         editor.putString("current_date",simpleDateFormat.format(new Date()));
+        editor.commit();
+    }
+
+
+    public void putString(String key, String value){
+        editor.putString(key,value);
         editor.commit();
     }
 }

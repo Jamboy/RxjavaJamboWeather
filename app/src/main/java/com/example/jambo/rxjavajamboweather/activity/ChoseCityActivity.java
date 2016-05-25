@@ -2,7 +2,9 @@ package com.example.jambo.rxjavajamboweather.activity;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
@@ -42,6 +44,7 @@ public class ChoseCityActivity extends Activity{
     public DBManager mDBManager;
     public WeatherDB mWeatherDB;
     private Province selectedProvince;
+    private SharedPreferences.Editor editor;
 
 
     @Override
@@ -52,10 +55,9 @@ public class ChoseCityActivity extends Activity{
         /**
          * 这里加判断，如果
          */
-
         init();
         setListView();
-
+        queryPronvinces();
     }
 
 
@@ -77,16 +79,17 @@ public class ChoseCityActivity extends Activity{
                                     .replace("地区","")
                                     .replace("盟","");
                     }
-                    Intent intent = new Intent(ChoseCityActivity.this, ShowWeatherActivity.class);
-                    intent.putExtra("city_name",city_name);
-                    startActivity(intent);
+                    Intent intent = new Intent();
+                    intent.putExtra("city_name", city_name);
+                    setResult(2,intent);
+                    finish();
                 }
             }
         });
-        queryPronvinces();
     }
 
     public void init(){
+        editor = PreferenceManager.getDefaultSharedPreferences(this).edit();
         listView = (ListView) findViewById(R.id.chose_list_view);
         title_text = (TextView) findViewById(R.id.title_text);
         mDBManager = new DBManager(this);
@@ -165,6 +168,16 @@ public class ChoseCityActivity extends Activity{
          .subscribe(observer);
     }
 
+
+    @Override
+    public void onBackPressed() {
+        if (currentLevel == LEVEL_CITY){
+            queryPronvinces();
+        }else{
+            finish();
+        }
+
+    }
 
     @Override
     protected void onDestroy() {
