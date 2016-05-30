@@ -104,7 +104,6 @@
 //                    queryWeatherFromService();
 //                }
 //            });
-//            WeatherAdapter mAdapter = new WeatherAdapter(getActivity(), R.layout.weather_forecast_list_item_text, new ArrayList<Weather.DailyForecastEntity>());
 //            weather_forecast_list.setAdapter(mAdapter);
 //            button.setOnClickListener(new View.OnClickListener() {
 //                @Override

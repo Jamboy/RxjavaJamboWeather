@@ -5,7 +5,7 @@
 
     <TextView
         android:layout_width="match_parent"
-        android:layout_height="150dp"
+        android:layout_height="256dp"
         android:gravity="center"
         android:textSize="20sp"
         android:text="咦啊咦子哟\nwhat is your main focus main for today?"

@@ -35,7 +35,7 @@ public class AutoUpdateService extends Service {
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
-        showNotification(intent);
+            showNotification(intent);
         new Thread(new Runnable() {
             @Override
             public void run() {

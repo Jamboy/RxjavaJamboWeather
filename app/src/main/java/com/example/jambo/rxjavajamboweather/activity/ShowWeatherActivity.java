@@ -1,19 +1,21 @@
 package com.example.jambo.rxjavajamboweather.activity;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.app.ActionBarDrawerToggle;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.MenuItem;
-import android.view.Window;
-import android.widget.ListView;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.jambo.rxjavajamboweather.R;
@@ -34,23 +36,27 @@ import rx.schedulers.Schedulers;
 /**
  * Created by Jambo on 2016/5/21.
  */
-public class ShowWeatherActivity extends Activity {
-    private ListView weather_list_view;
+public class ShowWeatherActivity extends AppCompatActivity {
+
+    public RecyclerView weather_recycler_view;
     public static final String KEY = "1f93bec9ad304eb2ae641280bd65b9df";
-    private TextView city_text;
-    private TextView temp_text;
-    private TextView suggistion_text;
+//    private TextView city_text;
+//    private TextView temp_text;
+//    private TextView suggistion_text;
     private SwipeRefreshLayout mSwipeRefreshLayout;
     private ACache mCache;
     private Observer<Weather> observer;
     private SharedPreferences preferences;
+    private Toolbar toolbar;
+    private CollapsingToolbarLayout collapsingToolbarLayout;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.drawer_weather);
+//        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+//        setSupportActionBar(toolbar);
         mCache = ACache.get(this);
-
         init();
         queryDate();
     }
@@ -72,12 +78,11 @@ public class ShowWeatherActivity extends Activity {
 
             @Override
             public void onNext(Weather weather) {
-                temp_text.setText(weather.now.tmp+"℃");
-                city_text.setText(weather.basic.city);
-                suggistion_text.setText(weather.suggestion.drsg.txt);
-                WeatherAdapter mAdapter = new WeatherAdapter(ShowWeatherActivity.this,R.layout.weather_forecast_list_item_text,weather.dailyForecast);
-                weather_list_view.setAdapter(mAdapter);
+//                添加adapter
 //                showNotification(weather);
+                weather_recycler_view.setLayoutManager(new LinearLayoutManager(ShowWeatherActivity.this));
+                WeatherAdapter mAdapter = new WeatherAdapter(ShowWeatherActivity.this,weather);
+                weather_recycler_view.setAdapter(mAdapter);
                 Intent intent = new Intent(ShowWeatherActivity.this, AutoUpdateService.class);
                 intent.putExtra("weather",weather.dailyForecast.get(0).cond.txtD);
                 intent.putExtra("temp",weather.now.tmp);
@@ -140,10 +145,7 @@ public class ShowWeatherActivity extends Activity {
 
     public void init(){
         preferences = PreferenceManager.getDefaultSharedPreferences(this);
-        weather_list_view = (ListView) findViewById(R.id.weather_forecast_list);
-        city_text = (TextView) findViewById(R.id.city_name);
-        temp_text = (TextView) findViewById(R.id.current_temp);
-        suggistion_text = (TextView) findViewById(R.id.suggestion_text);
+        weather_recycler_view = (RecyclerView) findViewById(R.id.recycler_view);
         mSwipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.swipeRefresh_layout);
         mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
@@ -151,8 +153,19 @@ public class ShowWeatherActivity extends Activity {
                     queryDate();
             }
         });
+
+        collapsingToolbarLayout = (CollapsingToolbarLayout) findViewById(R.id.toolbar_layout);
+        collapsingToolbarLayout.setTitle(" ");
+
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
         final DrawerLayout drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         NavigationView mNavigationView = (NavigationView) findViewById(R.id.navigation_view);
+
+        ActionBarDrawerToggle actionBarDrawerToggle = new ActionBarDrawerToggle(this,drawerLayout,toolbar,R.string.navigation_drawer_open,R.string.navigation_drawer_close);
+        drawerLayout.setDrawerListener(actionBarDrawerToggle);
+        actionBarDrawerToggle.syncState();
+
         mNavigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(MenuItem item) {

@@ -8,7 +8,6 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
-
     <style name="BaseText" parent="android:TextAppearance.Holo.Large">
         <item name="android:textColor">@color/text</item>
         <item name="android:fontFamily">sans-serif-light</item>
@@ -17,6 +16,25 @@
         <item name="android:ellipsize">marquee</item>
     </style>
 
+
+    <style name="HourlyText" parent="BaseText">
+        <item name="android:textSize">@dimen/hourly_sugg_text</item>
+        <item name="android:ellipsize">none</item>
+    </style>
+
+    <style name="SuggestionText" parent="BaseText">
+        <item name="android:textSize">@dimen/suggestion_drsg_text</item>
+        <item name="android:paddingTop">@dimen/suggestion_drst_padding</item>
+        <item name="android:paddingLeft">@dimen/suggestion_drst_padding</item>
+        <item name="android:paddingBottom">@dimen/suggestion_drst_padding</item>
+        <item name="android:ellipsize">none</item>
+    </style>
+
+    <style name="SuggestionTxtText" parent="BaseText">
+        <item name="android:paddingLeft">@dimen/suggestion_drst_padding</item>
+        <item name="android:textSize">@dimen/suggestion_txt_text</item>
+        <item name="android:textColor">@color/text_de_emphasized</item>
+    </style>
 
     <style name="CityText" parent="BaseText">
         <item name="android:textSize">@dimen/location_text</item>
@@ -51,5 +69,16 @@
         <item name="android:textSize">@dimen/attribution_text</item>
         <item name="android:textColor">@color/text_faint</item>
     </style>
+
+
+    <style name="AppTheme.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+
+    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar"/>
+
+    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light"/>
+
 
 </resources>
