@@ -18,15 +18,27 @@
             style="@style/CityText"
             android:paddingLeft="10dp"
             android:layout_gravity="center"
+            android:layout_weight="4"
+            android:layout_width="0dp"
+            android:text="changsha"
+            android:layout_height="wrap_content"/>
+        
+        <TextView
+            android:id="@+id/now_weather_description"
+            android:layout_gravity="center"
+            android:text="duoyun"
+            style="@style/WeatherForecastListItemTextDeEmphasis"
+            android:textSize="20sp"
             android:layout_weight="3"
             android:layout_width="0dp"
             android:layout_height="wrap_content"/>
 
         <TextView
+            android:text="17"
             android:id="@+id/now_tmp_text"
             style="@style/CurrentTemperatureText"
             android:layout_gravity="center"
-            android:layout_weight="1"
+            android:layout_weight="2"
             android:layout_width="0dp"
             android:layout_height="wrap_content"/>
 

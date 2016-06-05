@@ -2,8 +2,10 @@ package com.example.jambo.rxjavajamboweather.service;
 
 import android.app.AlarmManager;
 import android.app.Notification;
+import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.app.Service;
+import android.app.TaskStackBuilder;
 import android.content.Intent;
 import android.os.IBinder;
 import android.os.SystemClock;
@@ -58,6 +60,8 @@ public class AutoUpdateService extends Service {
 
     private void showNotification(Intent intent){
         String weather = intent.getStringExtra("weather");
+
+
         Notification.Builder builder = new Notification.Builder(this);
         builder.setContentTitle(weather + "  " + intent.getStringExtra("temp") + "℃");
         Pattern pattern = Pattern.compile(".*雨");
@@ -69,8 +73,17 @@ public class AutoUpdateService extends Service {
         }
         builder.setSmallIcon(R.drawable.weather);
         Intent notificationIntent = new Intent(this, ShowWeatherActivity.class);
-        PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, notificationIntent, 0);
-        startForeground(1,builder.build());
+        TaskStackBuilder stackBuilder = TaskStackBuilder.create(this);
+        stackBuilder.addParentStack(ShowWeatherActivity.class);
+        stackBuilder.addNextIntent(notificationIntent);
+        notificationIntent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+//        PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, notificationIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+//        startForeground(1,builder.build());
+        PendingIntent pendingIntent = stackBuilder.getPendingIntent(0,PendingIntent.FLAG_UPDATE_CURRENT);
+        builder.setContentIntent(pendingIntent);
+        NotificationManager notificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
+        notificationManager.notify(0,builder.build());
+
     }
 
 

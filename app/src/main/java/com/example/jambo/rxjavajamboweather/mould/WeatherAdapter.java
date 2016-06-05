@@ -61,7 +61,8 @@ public class WeatherAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         if (holder instanceof WeatherNowHolder){
             ((WeatherNowHolder) holder).now_city.setText(mWeather.basic.city);
-            ((WeatherNowHolder) holder).now_tmp.setText(mWeather.now.tmp + "℃");
+            ((WeatherNowHolder) holder).now_tmp.setText(mWeather.now.tmp+"℃");
+            ((WeatherNowHolder) holder).now_desc.setText(mWeather.now.cond.txt);
         }
 
         if (holder instanceof WeatherHourHolder){
@@ -128,10 +129,12 @@ public class WeatherAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
 
         TextView now_city;
         TextView now_tmp;
+        TextView now_desc;
         public WeatherNowHolder(View itemView) {
             super(itemView);
             now_city = (TextView) itemView.findViewById(R.id.now_city_text);
             now_tmp = (TextView) itemView.findViewById(R.id.now_tmp_text);
+            now_desc = (TextView) itemView.findViewById(R.id.now_weather_description);
         }
     }
 
